@@ -18,12 +18,11 @@ export class TuorListComponent implements OnInit {
   }
 
   findAll() {
-    this.tuorService.findAll().subscribe(result => {
-      console.log(result)
-      this.tuors=result;
+    this.tuorService.findAll().subscribe((result: Tuor[]) => {
+      this.tuors = result;
     }, error => {
       console.log(error);
-    })
+    });
   }
 
 

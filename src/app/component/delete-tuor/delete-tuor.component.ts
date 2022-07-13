@@ -9,7 +9,6 @@ import {FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./delete-tuor.component.css']
 })
 export class DeleteTuorComponent implements OnInit {
-  id: string | null | undefined;
   obj: any;
   deleteForm: FormGroup = new FormGroup({
     title: new FormControl(),
@@ -20,29 +19,23 @@ export class DeleteTuorComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private router: Router) {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      this.id = paramMap.get('id');
-      this.findById(this.id);
+      const id = Number(paramMap.get('id'));
+      this.findById(id);
     });
   }
 
   ngOnInit(): void {
   }
-  findById(id: string | null) {
+  findById(id: number) {
     return this.tuorService.findById(id).subscribe(tour => {
-      // tslint:disable-next-line:no-shadowed-variable
-      // this.editForm.setValue(student);
-      this.deleteForm = new FormGroup({
-        title: new FormControl(tour.title),
-        price: new FormControl(tour.price),
-        description: new FormControl(tour.description),
-      });
+      this.deleteForm.patchValue(tour);
     }, error => {
       alert(error);
     });
   }
 
-  delete() {
-    this.tuorService.delete(this.id).subscribe(() => {
+  onDelete() {
+    this.tuorService.delete(this.deleteForm.get('id')?.value).subscribe(() => {
       alert('Deleted');
       this.router.navigate(['']);
     }, error => {

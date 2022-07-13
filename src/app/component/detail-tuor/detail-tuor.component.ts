@@ -9,21 +9,20 @@ import {Tuor} from "../../model/tuor";
   styleUrls: ['./detail-tuor.component.css']
 })
 export class DetailTuorComponent implements OnInit {
-  id: string | null | undefined;
   tour: Tuor ={};
 
   constructor(private tuorService: TuorService,
               private activatedRoute: ActivatedRoute) {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      this.id = paramMap.get('id');
-      this.getDetail(this.id);
+      const id = Number(paramMap.get('id'));
+      this.getDetail(id);
     });
   }
 
   ngOnInit(): void {
   }
 
-  getDetail(id: string | null) {
+  getDetail(id: number) {
     this.tuorService.findById(id).subscribe(data => {
       console.log(data);
       this.tour = data;

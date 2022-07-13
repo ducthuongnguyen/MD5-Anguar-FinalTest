@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {TuorService} from "../../service/tuor.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Tuor} from "../../model/tuor";
 
 @Component({
   selector: 'app-edit-tuor',
@@ -9,46 +10,48 @@ import {FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./edit-tuor.component.css']
 })
 export class EditTuorComponent implements OnInit {
-  id: string | null | undefined;
-  obj: any;
-  editForm: FormGroup = new FormGroup({
-    title: new FormControl(),
-    price: new FormControl(),
-    description: new FormControl(),
-  });
+  tourForm!: FormGroup;
 
   constructor(private tuorService: TuorService,
               private activatedRoute: ActivatedRoute,
-              private router: Router) {
-    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      this.id = paramMap.get('id');
-      this.findById(this.id);
-    });
+              private router: Router,
+              private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
+    this.tourForm = this.fb.group({
+      id: [''],
+      title: ['', Validators.required],
+      price: ['', Validators.required],
+      description: [''],
+    });
+
+    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      const id = Number(paramMap.get('id'));
+      this.findById(id);
+    });
   }
 
-  findById(id: string | null) {
-    return this.tuorService.findById(id).subscribe(tour => {
-      // tslint:disable-next-line:no-shadowed-variable
-      // this.editForm.setValue(student);
-      this.editForm = new FormGroup({
-        title: new FormControl(tour.title),
-        price: new FormControl(tour.price),
-        description: new FormControl(tour.description),
-      });
+  findById(id: number) {
+    return this.tuorService.findById(id).subscribe((tour: Tuor) => {
+      this.tourForm.patchValue(tour);
     }, error => {
-      alert(error);
+      if (error.status === 404) {
+        alert("Not found");
+      } else {
+        alert("Something went wrong")
+      }
+      console.log(error);
     });
   }
 
   update() {
-    this.obj = this.editForm.value;
-    this.tuorService.updateTour(this.id, this.obj).subscribe(() => {
-      alert('Updated!!');
-      // @ts-ignore
-      this.router.navigate(['']);
+    this.tuorService.updateTour(this.tourForm.get('id')?.value, this.tourForm.value).subscribe((tuor: Tuor) => {
+      if (tuor) {
+        alert('Updated!!');
+      } else {
+        //TODO
+      }
     }, error => {
       console.log(error);
     });

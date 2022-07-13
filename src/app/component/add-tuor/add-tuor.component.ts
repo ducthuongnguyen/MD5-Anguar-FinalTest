@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TuorService} from "../../service/tuor.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Tuor} from "../../model/tuor";
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-add-tuor',
@@ -10,29 +10,37 @@ import {FormControl, FormGroup} from '@angular/forms';
   styleUrls: ['./add-tuor.component.css']
 })
 export class AddTuorComponent implements OnInit {
-  tours: Tuor[] | undefined;
-  tour: any;
-
-  addForm: FormGroup = new FormGroup({
-    title: new FormControl(),
-    price: new FormControl(),
-    description: new FormControl(),
-  });
+  tourForm!: FormGroup;
 
   constructor(private tuorService: TuorService,
-              private router: Router) {
+              private router: Router,
+              private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
+    this.tourForm = this.fb.group({
+      id: [''],
+      title: ['', Validators.required],
+      price: ['', Validators.required],
+      description: [''],
+    });
   }
+
   onSubmit() {
-    this.tour = this.addForm.value;
-    this.tuorService.save(this.tour).subscribe(() => {
-      this.addForm.reset();
-      alert('Created!!');
-      this.router.navigate(['']);
+    console.log('Submit form');
+    this.tuorService.save(this.tourForm.value).subscribe((tour: Tuor) => {
+      this.tourForm.reset();
+      if (tour) {
+        alert('Created!!');
+      } else {
+        // TODO
+      }
     }, error => {
       alert(error);
     });
+  }
+
+  goBack() {
+    this.router.navigate(['']);
   }
 }

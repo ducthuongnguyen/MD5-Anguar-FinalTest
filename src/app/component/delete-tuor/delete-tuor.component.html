@@ -1,7 +1,6 @@
 <div class="container">
   <div class="col-5">
-    <form [formGroup]="deleteForm" (ngSubmit)="delete()">
-      <!--        <input type="hidden" class="form-control" id="id" formControlName="id">-->
+    <form [formGroup]="deleteForm" (ngSubmit)="onDelete()">
       <div class="form-group">
         <label for="title">Title</label>
         <input type="text" class="form-control" id="title" formControlName="title">
