@@ -8,28 +8,27 @@ import {Tuor} from "../model/tuor";
   providedIn: 'root'
 })
 export class TuorService {
-  private API_URL = environment.apiUrl;
 
   constructor(private httpClient: HttpClient) {
   }
 
-  findAll(): Observable<Tuor[]>{
-    return this.httpClient.get<Tuor[]>(this.API_URL);
+  findAll(): Observable<Tuor[]> {
+    return this.httpClient.get<Tuor[]>(environment.apiUrl + '/tuors');
   }
 
-  findById(id: string | null): Observable<Tuor> {
-    return this.httpClient.get<Tuor>(`${(this.API_URL)}/${id}`);
+  findById(id: number): Observable<Tuor> {
+    return this.httpClient.get<Tuor>(`${(environment.apiUrl + '/tuors')}/${id}`);
   }
 
   updateTour(id: string | null | undefined, tour: Tuor): Observable<Tuor> {
-    return this.httpClient.put<Tuor>(`${(this.API_URL)}/${id}`, tour);
+    return this.httpClient.put<Tuor>(`${(environment.apiUrl + '/tuors')}/${id}`, tour);
   }
 
   save(tour: Tuor): Observable<Tuor> {
-    return this.httpClient.post<Tuor>(this.API_URL, tour);
+    return this.httpClient.post<Tuor>(environment.apiUrl + '/tuors', tour);
   }
 
-  delete(id: string | null | undefined): Observable<Tuor> {
-    return this.httpClient.delete<Tuor>(`${(this.API_URL)}/${id}`);
+  delete(id: number): Observable<Tuor> {
+    return this.httpClient.delete<Tuor>(`${(environment.apiUrl + '/tuors')}/${id}`);
   }
 }
