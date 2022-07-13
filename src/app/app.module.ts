@@ -3,22 +3,23 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './component/login/login.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {JwtInterceptor} from "./helper/jwt-interceptor";
-import { SignupComponent } from './component/signup/signup.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import { AdminComponent } from './component/admin/admin.component';
-import { UserComponent } from './component/user/user.component';
+import { TuorListComponent } from './component/tuor-list/tuor-list.component';
+import {HttpClientModule} from "@angular/common/http";
+import { DetailTuorComponent } from './component/detail-tuor/detail-tuor.component';
+import { EditTuorComponent } from './component/edit-tuor/edit-tuor.component';
+import { AddTuorComponent } from './component/add-tuor/add-tuor.component';
+import { DeleteTuorComponent } from './component/delete-tuor/delete-tuor.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    SignupComponent,
-    AdminComponent,
-    UserComponent
+    TuorListComponent,
+    DetailTuorComponent,
+    EditTuorComponent,
+    AddTuorComponent,
+    DeleteTuorComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,8 +27,7 @@ import { UserComponent } from './component/user/user.component';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

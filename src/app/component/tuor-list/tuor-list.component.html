@@ -1,0 +1,21 @@
+<button routerLink="add">Add Tour</button>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Name</th>
+    <th scope="col">Price</th>
+    <th scope="col" colspan="2">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let t of tuors; index as i">
+    <th scope="row">{{i+1}}</th>
+    <td><a [routerLink]="['/detail',t.id]">{{t.title}}</a></td>
+    <td>{{t.price}}</td>
+    <td><button  [routerLink]="['/edit',t.id]">Edit</button></td>
+    <td><button [routerLink]="['/delete',t.id]">Delete</button></td>
+  </tr>
+  </tbody>
+</table>

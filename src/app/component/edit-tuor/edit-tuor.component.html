@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="col-5">
+    <form [formGroup]="editForm" (ngSubmit)="update()">
+      <!--        <input type="hidden" class="form-control" id="id" formControlName="id">-->
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" formControlName="title">
+      </div>
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" class="form-control" id="price" formControlName="price">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" formControlName="description"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+  </div>
+</div>

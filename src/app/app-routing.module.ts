@@ -1,27 +1,26 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from "./component/login/login.component";
-import {SignupComponent} from "./component/signup/signup.component";
-import {AdminComponent} from "./component/admin/admin.component";
-import {UserComponent} from "./component/user/user.component";
-import {AdminAuthGuard} from "./helper/admin-auth-guard";
-import {AuthGuard} from "./helper/auth-guard";
-import {AppComponent} from "./app.component";
+import {TuorListComponent} from "./component/tuor-list/tuor-list.component";
+import {DetailTuorComponent} from "./component/detail-tuor/detail-tuor.component";
+import {EditTuorComponent} from "./component/edit-tuor/edit-tuor.component";
+import {AddTuorComponent} from "./component/add-tuor/add-tuor.component";
+import {DeleteTuorComponent} from "./component/delete-tuor/delete-tuor.component";
 
 const routes: Routes = [{
-  path: 'login',
-  component: LoginComponent,
+  path: '',
+  component: TuorListComponent,
 }, {
-  path: 'register',
-  component: SignupComponent,
+  path: 'detail/:id',
+  component: DetailTuorComponent,
 }, {
-  path: 'admin',
-  canActivate: [AdminAuthGuard],
-  component: AdminComponent
+  path: "edit/:id",
+  component: EditTuorComponent,
 }, {
-  path: 'user',
-  component: UserComponent,
-  canActivate: [AuthGuard]
+  path: 'add',
+  component: AddTuorComponent,
+},{
+  path:'delete/:id',
+  component: DeleteTuorComponent,
 }];
 
 @NgModule({
